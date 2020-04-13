@@ -1,0 +1,25 @@
+version: '3'
+services:
+  linguist-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - linguist-mysql-db
+    ports:
+      - 7777:7777
+    volumes:
+      - ".:/linguist-api"
+  linguist-mysql-db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'linguist-api'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - 3309:3306
+    volumes:
+      - linguist-db:/var/lib/mysql
+volumes:
+  linguist-db:

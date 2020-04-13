@@ -15,5 +15,5 @@ func main() {
 
 	e.POST("/lessons", handler.Lessons.CreateLesson)
 
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.Start(":7777"))
 }
