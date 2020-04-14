@@ -12,13 +12,14 @@ services:
       - ".:/linguist-api"
   linguist-mysql-db:
     image: mysql:5.7
+    command: mysqld --sql_mode=""
     environment:
       MYSQL_DATABASE: 'linguist-api'
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      - 3309:3306
+      - 3306:3306
     volumes:
       - linguist-db:/var/lib/mysql
 volumes:

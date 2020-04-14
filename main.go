@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/labstack/echo"
 	"github.com/santoslucas/linguist-api/handler"
+	"github.com/santoslucas/linguist-api/repository"
 	"net/http"
 )
 
@@ -14,6 +15,8 @@ func main() {
 	})
 
 	e.POST("/lessons", handler.Lessons.CreateLesson)
+
+	defer repository.CloseConnection()
 
 	e.Logger.Fatal(e.Start(":7777"))
 }
