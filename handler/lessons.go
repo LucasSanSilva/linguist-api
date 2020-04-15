@@ -24,11 +24,21 @@ func (l *lessonsHandler) CreateLesson(c echo.Context) error {
 	if err != nil {
 		return c.NoContent(http.StatusBadRequest)
 	}
-	
+
 	err = l.lessonsService.CreateLesson(c, *lesson)
 	if err != nil {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
 	return c.String(http.StatusCreated, "MAOE")
+}
+
+func (l *lessonsHandler) GetLessons(c echo.Context) error {
+	lessons, err := l.lessonsService.GetLessons(c, "fr")
+
+	if err != nil {
+		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	return c.JSON(http.StatusOK, lessons)
 }

@@ -15,6 +15,7 @@ func main() {
 	})
 
 	e.POST("/lessons", handler.Lessons.CreateLesson)
+	e.GET("/lessons", handler.Lessons.GetLessons)
 
 	defer repository.CloseConnection()
 

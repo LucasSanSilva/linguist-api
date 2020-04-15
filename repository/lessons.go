@@ -15,6 +15,7 @@ type Lesson struct {
 
 type Lessons interface {
 	CreateLesson(c echo.Context, lesson Lesson) error
+	GetLessons(c echo.Context, language string) ([]Lesson, error)
 }
 
 type lessonsRepository struct {
@@ -28,4 +29,11 @@ func NewLessonsRepository() Lessons {
 func (l *lessonsRepository) CreateLesson(c echo.Context, lesson Lesson) error {
 	query := l.db.Create(&lesson)
 	return query.Error
+}
+
+func (l *lessonsRepository) GetLessons(c echo.Context, language string) ([]Lesson, error) {
+	var result []Lesson
+	_ = l.db.Where("language = ?", language).Order("title asc").Find(&result)
+
+	return result, nil
 }

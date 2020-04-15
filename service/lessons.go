@@ -14,6 +14,7 @@ type Lesson struct {
 
 type Lessons interface {
 	CreateLesson(c echo.Context, lesson Lesson) error
+	GetLessons(c echo.Context, language string) ([]Lesson, error)
 }
 
 type lessonsService struct {
@@ -37,4 +38,25 @@ func (l *lessonsService) CreateLesson(c echo.Context, lesson Lesson) error {
 	err := l.lessonsRepository.CreateLesson(c, repoLesson)
 
 	return err
+}
+
+func (l *lessonsService) GetLessons(c echo.Context, language string) ([]Lesson, error) {
+	var lessons []Lesson
+
+	lessonsData, err := l.lessonsRepository.GetLessons(c, language)
+	if err != nil {
+		return lessons, err
+	}
+
+	for i := 0; i < len(lessonsData); i++ {
+		lesson := Lesson{
+			Language:	lessonsData[i].Language,
+			Title:	lessonsData[i].Title,
+			Content: lessonsData[i].Content,
+			Media:	lessonsData[i].Media,
+		}
+		lessons = append(lessons, lesson)
+	}
+
+	return lessons, nil
 }
